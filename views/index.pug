@@ -1,0 +1,19 @@
+extends layout
+
+block layout-content
+  header
+    include navbar.pug
+    +navbar()
+
+    div#mobileMenu
+      div#headerControls
+        div#mapTools
+          div#baselayerSelect(class=layerlist)
+          div#overlaySelect(class=layerList)
+
+
+
+        
+
+    
+      

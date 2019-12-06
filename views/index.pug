@@ -1,15 +1,22 @@
+//views/index.pug
 extends layout
 
 block layout-content
-  header
-    include navbar.pug
-    +navbar()
+    div.container
+      div.row.bg-pink
+        div.col-auto.in-line
+          button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation")
+            span.navbar-toggler-icon
+        div.col-11.collapse-navbar-collapse
+          ul.nav.justify-content-center
+            li.nav-item
+              //- a.nav-link(href="#") 'a'
+              a.btn.btn-info(href="/data") ok
+            li.nav-item
+              a.nav-link(href="/") home
+            li.nav-item
+              a.nav-link(href="#") 'c'
 
-    div#mobileMenu
-      div#headerControls
-        div#mapTools
-          div#baselayerSelect(class=layerlist)
-          div#overlaySelect(class=layerList)
 
 
 

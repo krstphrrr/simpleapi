@@ -3,8 +3,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const exphbs = require('express-handlebars')
+const Sequelize = require('sequelize');
 
-const Client = require('pg');
+// const Client = require('pg');
 
 // database
 const db = require('./config/database');
@@ -16,7 +17,6 @@ db.authenticate()
 
 // apps
 const app = express();
-
 
 
 // load view engine 
@@ -33,15 +33,42 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // ROUTES
 // app.use('/iris', require('./routes/irises'))
-app.use('/', (req, res, next) =>{
-    res.render('index',{
-        title:'hi'
-    })
+// app.use('/', (req, res, next) =>{
+//     res.render('index',{
+//         title:'hi'
+//     })
+// })
+
+const testquery = "SELECT row_to_json(fc) FROM(	SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) as features FROM (		SELECT 'Feature' as type, ST_AsGeoJSON(gi.wkb_geometry)::json as geometry,		row_to_json((\"EcologicalSiteId\",\"PlotKey\")) as properties FROM \"geoIndicators\" as gi) as f) as fc"
+
+// app.use("/data", (req,res,next) =>{
+//     res.render('data', {title:"datatest"});
+// })
+// app.use('/iris', require('./routes/irises'))
+const geoModel = require('./models/geoIndicators')
+const Geo = geoModel(db,Sequelize)
+
+
+app.use('/map', (req, res, next)=>{
+    res.render('data')
 })
 
 
 
+// app.use('/data', (req, res, next) =>{
+//     fun1Promise = fun1();
+//     fun1Promise.then(function(result){
+//         res.render('data',{
+//             result})
 
+//     })
+    
+//     function fun1(){
+//         return Geo.findAll({attributes: {exclude: ['id', 'createdAt', 'updatedAt']},
+//         where: {ogcFid: 3}
+//     })
+//     }
+//  })
 
 
 
@@ -50,3 +77,9 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`escuchando en..${PORT}`);
 })
+
+
+
+
+
+

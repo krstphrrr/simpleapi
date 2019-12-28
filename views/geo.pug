@@ -1,0 +1,10 @@
+extend layout.pug 
+
+block content
+    if items.length > 0
+        div.grid
+            each item in items
+                h1 #{item.nid}
+                h1 #{item.coord} 
+                h1 #{item.txt}
+                h1 #{item.userid}

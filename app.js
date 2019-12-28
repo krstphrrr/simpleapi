@@ -20,10 +20,6 @@ const app = express();
 
 
 // load view engine 
-// app.engine('handlebars', exphbs({
-//     defaultLayout: 'main'
-// }));
-// app.set('view engine', 'handlebars')
 
 app.set('views', path.join(__dirname,'views'))
 app.set('view engine', 'pug')
@@ -49,11 +45,9 @@ const geoModel = require('./models/geoIndicators')
 const Geo = geoModel(db,Sequelize)
 
 
-app.use('/map', (req, res, next)=>{
-    res.render('data')
-})
+const geoRoutes = require('./routes/geo')
 
-
+app.use(geoRoutes)
 
 // app.use('/data', (req, res, next) =>{
 //     fun1Promise = fun1();

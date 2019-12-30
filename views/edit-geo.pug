@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  div.mdl-grid
+    div.mdl-cell.mdl-cell--12-col 
+    div.mdl-cell.mdl-cell--12-col
+      div.mdl-card.mdl-shadow--2dp
+        form(action=(editing===false?'/add-geo':'/edit-geo/'), method="POST")
+          //- div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+          //-   input.mdl-textfield__input(type="text", name="nid", id="nid")
+          //-   label.mdl-textfield__label(for="nid") UID...
+          div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+            input.mdl-textfield__input(type="text",name="geom", id="geom", value=(editing===true?items.dataValues.geom.coordinates:''))
+            label.mdl-textfield__label(for="geom") coords?
+          div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+            input.mdl-textfield__input(type="text", name="txt", id="txt", value=(editing===true?items.txt:''))
+            label.mdl-textfield__label(for="txt") txt..
+          div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+            input.mdl-textfield__input(type="text", name="userid", id="userid", value=(editing===true?items.userid:''))
+            label.mdl-textfield__label(for="userid") user..
+          if (editing===false) 
+            button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored Submit 
+          else 
+            input.mdl-textfield__input(type="hidden", value=items.nid, name="nid")
+            button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored Update

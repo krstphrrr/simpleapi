@@ -13,4 +13,6 @@ block content
                             p #{item.txt}
                             p #{item.userid}
                             div.card__actions
-                              a(href="/geo/"+item.nid, class="btn") Details
+                              a.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored(href="/geo/"+item.nid) Details
+                              a.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored(href="/edit-geo/"+item.nid+"?edit=true") Edit
+                              

@@ -1,26 +1,27 @@
+const Sequelize = require('sequelize')
 const db = require("../config/database");
 
-module.exports = class Geonote {
-    constructor(nid,userid,txt,coord){
-        this.nid = nid
-        this.userid = userid 
-        this.txt = txt 
-        this.coord = coord
-    }
-    save(){
+const Geonote = db.define("geonote", {
+  nid: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    allowNull: false,
+    primaryKey: true
+  },
+  userid: {
+    type: Sequelize.STRING,
+    allowNull:false
+  },
+  txt: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  geom: {
+    type: Sequelize.GEOMETRY('Point', 4326),
+    allowNull: false
+  }
+});
 
-    }
+module.exports = Geonote
 
-    static deleteByid(id){
-
-    }
-
-    static fetchAll(){
-        return db.query('SELECT * FROM geonotes')
-    }
-
-    static findById(id){
-        
-    }
-}
 

@@ -1,0 +1,13 @@
+extends layout.pug 
+
+block content
+  main.centered
+    h1 #{items.nid}
+    hr
+    div.mdl-grid
+        div.mdl-cell.mdl-cell--12-col 
+        div.mdl-cell.mdl-cell--12-col
+          div.demo-card-square.mdl-card.mdl-shadow--2dp
+            p #{items.lat},#{items.long}
+            p #{items.txt}
+            p #{items.userid}

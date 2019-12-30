@@ -1,18 +1,22 @@
-//views/index.pug
 extends layout
 
-block layout-content
-    div.container
-      div.row.bg-pink
-        div.col-auto.in-line
-          button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation")
-            span.navbar-toggler-icon
-        div.col-11.collapse-navbar-collapse
-          ul.nav.justify-content-center
-            li.nav-item
-              //- a.nav-link(href="#") 'a'
-              a.btn.btn-info(href="/data") ok
-            li.nav-item
-              a.nav-link(href="/") home
-            li.nav-item
-              a.nav-link(href="#") 'c'
+block content
+  div.mdl-grid
+    div.mdl-cell.mdl-cell--12-col 
+    div.mdl-cell.mdl-cell--12-col
+      div.mdl-card.mdl-shadow--2dp
+        form(action="/", method="POST")
+          //- div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+          //-   input.mdl-textfield__input(type="text", name="nid", id="nid")
+          //-   label.mdl-textfield__label(for="nid") UID...
+          div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+            input.mdl-textfield__input(type="text",name="geom", id="geom")
+            label.mdl-textfield__label(for="geom") coords?
+          div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+            input.mdl-textfield__input(type="text", name="txt", id="txt")
+            label.mdl-textfield__label(for="txt") txt..
+          div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+            input.mdl-textfield__input(type="text", name="userid", id="userid")
+            label.mdl-textfield__label(for="userid") user..
+          button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored submit
+

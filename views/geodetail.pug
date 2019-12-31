@@ -10,4 +10,8 @@ block content
           div.demo-card-square.mdl-card.mdl-shadow--2dp
             p #{items.dataValues.geom.coordinates}
             p #{items.txt}
-            p #{items.userid}
+            p #{items.username}
+            div.card__actions
+              form(action='/delete-geo', method='POST')
+                input.mdl-textfield__input(type="hidden", value=items.nid, name="nid")
+                button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored(type='submit') Delete

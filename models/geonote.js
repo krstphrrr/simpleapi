@@ -8,7 +8,7 @@ const Geonote = db.define("geonote", {
     allowNull: false,
     primaryKey: true
   },
-  userid: {
+  username: {
     type: Sequelize.STRING,
     allowNull:false
   },

@@ -3,13 +3,16 @@ const Geonote = require('../models/geonote')
 // get all the notes in db
 
 exports.getGeonote = (req, res, next) => {
-    Geonote.findAll()
+    req.user
+        .getGeonotes()
+    // Geonote.findAll()
         .then(geonote =>{
             res.render('geo',{
                 items: geonote,
-                latlong: geonote[0].dataValues.geom.coordinates,
+                // latlong: geonote[0].dataValues.geom.coordinates,
                 pageTitle: 'GEO!!', 
-                path:'/geo'
+                path:'/geo',
+                isAuthenticated: req.isLoggedIn
             })
         })
         .catch(err =>{
@@ -26,7 +29,8 @@ exports.getGeo = (req, res, next) => {
       res.render("geodetail", {
         items: geonote,
         pageTitle: "GEO!!",
-        path: "/geodetail"
+        path: "/geodetail",
+        isAuthenticated: req.isLoggedIn
       });
     })
     .catch(err => {
@@ -39,7 +43,8 @@ exports.getGeo = (req, res, next) => {
 exports.getaddGeonote = (req, res, next)=>{
     res.render('edit-geo', {
         pageTitle:'add note',
-        editing:false
+        editing:false,
+        isAuthenticated: req.isLoggedIn
     })
 }
 
@@ -48,15 +53,16 @@ exports.getaddGeonote = (req, res, next)=>{
 exports.postaddGeonote = (req, res, next)=>{
     const geom = req.body.geom;
     const txt = req.body.txt;
-    const userid = req.body.userid
+    const username = req.body.username
     const rest = (...args)=>{return `${args}`}
     const point = {type: 'Point', coordinates:rest(geom).split(",")};
     // const point = { type: 'Point', coordinates: [req.body.long, req.body.lat] };
     // ^^^could work but needs update in pug: individual inputforms that reference lat & long
-    Geonote.create({
-         geom: point,
-         txt: txt,
-         userid: userid
+    // console.log(req.user)
+    req.user.createGeonote({ //create an associated note (associated w a user)
+      geom: point,
+      txt: txt,
+      username: username
     })
         .then(result=>{
             console.log("Created geonote!")
@@ -77,10 +83,13 @@ exports.editGeo = (req, res, next) => {
       console.log(req)
       return res.redirect('/')
   }
-  
-  Geonote.findByPk(geoId)
-    .then(geonote => {
-    if (!geonote) {
+  req.user.getGeonotes({where:{nid:geoId}})//brings an array
+//   Geonote.findByPk(geoId)
+    .then(geonotes => {
+    // console.log(geonotes) //darn array
+    // console.log(geonotes[0]) 
+    const geonote = geonotes[0] 
+    if (!geonotes) {
         console.log("segunda salida")
         return res.redirect('/')
     }
@@ -89,7 +98,8 @@ exports.editGeo = (req, res, next) => {
         pageTitle: "GEO!!",
         path: "/edit-geo",
         editing: true,
-        geoId: geoId
+        geoId: geoId,
+        isAuthenticated: req.isLoggedIn
       });
     })
     .catch(err => {
@@ -103,16 +113,19 @@ exports.posteditGeo = (req, res, next) => {
   const geoId = req.body.nid
   const updatedgeom = req.body.geom;
   const updatedtxt = req.body.txt;
-  const updateduserid = req.body.userid;
+  const updatedusername = req.body.username;
   const rest = (...args) => {
     return `${args}`;
   };
   const point = { type: "Point", coordinates: rest(updatedgeom).split(",") };
+  //if a user is the one finding the note..
+
   Geonote.findByPk(geoId)
     .then(geonote => {
+      
       geonote.geom = point
       geonote.txt = updatedtxt;
-      geonote.userid = updateduserid
+      geonote.username = updatedusername
       return geonote.save()
     })
     .then(result => {
@@ -121,14 +134,31 @@ exports.posteditGeo = (req, res, next) => {
     })
     .catch(err => {
       console.log(err);
-      res.redirect("/geo");
+      ;
     });
 };
 
+exports.postDeleteGeo = (req, res, next)=>{
+    const geoId = req.body.nid
+    // res.user.
+    Geonote.findByPk(geoId)
+      .then(geonote=>{
+        return geonote.destroy()
+      })
+      .then(results =>{
+        console.log('destroyeddd')
+        res.redirect("/geo");
+      })
+      .catch(err => console.log(err))
+}
+
 
 exports.getIndex = (req, res, next) =>{
+    // console.log(req.user)
+    const isLoggedIn = req.get("Cookie").split("=")[1];
     res.render('index', {
-        editing: false
+        editing: false,
+        isAuthenticated: isLoggedIn
     })
         
 }

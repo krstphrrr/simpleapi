@@ -1,5 +1,5 @@
 const Geonote = require('../models/geonote')
-
+const geoJSON = require('geojson')
 // get all the notes in db
 
 exports.getGeonote = (req, res, next) => {
@@ -155,10 +155,21 @@ exports.postDeleteGeo = (req, res, next)=>{
 
 exports.getIndex = (req, res, next) =>{
     // console.log(req.user)
-    const isLoggedIn = req.get("Cookie").split("=")[1];
-    res.render('index', {
-        editing: false,
-        isAuthenticated: isLoggedIn
+    // const isLoggedIn = req.get("Cookie").split("=")[1];
+    req.user
+        .getGeonotes()
+    // Geonote.findAll()
+        .then(geonote =>{
+         const data = JSON.stringify(geonote)
+         const geodata= JSON.parse(data)
+         const gd = geoJSON.parse(geodata,{GeoJSON: 'geom'})
+         console.log(gd)
+         res.render('index',{
+                items: JSON.stringify(gd),
+                editing:false
+                // isAuthenticated:isLoggedIn
+            
+        })
     })
-        
+        .catch(err=>console.log(err))
 }

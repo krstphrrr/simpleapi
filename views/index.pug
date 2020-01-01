@@ -1,10 +1,22 @@
 extends layout
-
+  
 block content
-  div.mdl-grid
-    div.mdl-cell.mdl-cell--12-col 
-    div.mdl-cell.mdl-cell--12-col
-      div.mdl-card.mdl-shadow--2dp
-        h1 home
-        if (isAuthenticated)
-          h1 you are logged in
+  #mapid(style="height:100%")
+  script(src="scripts/mp.js")
+  script.
+    const markers =[] 
+    const mymap = L.map("mapid").setView([32.302804, -106.727800], 13);
+    // tile layer
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+                attribution: '.',
+                maxZoom: 18,
+                id: 'mapbox/streets-v11',
+                accessToken: str()
+            }).addTo(mymap);
+   
+    const geojsonfeature = !{items}
+    L.geoJSON(geojsonfeature).addTo(mymap)
+    const geobounds = L.geoJSON(geojsonfeature).addTo(mymap)
+    mymap.fitBounds(geobounds.getBounds())
+
+    

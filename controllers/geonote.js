@@ -82,6 +82,7 @@ exports.postaddGeonote = (req, res, next)=>{
     const rest = (...args)=>{return `${args}`}
     const point = {type: 'Point', coordinates:rest(geom).split(",")};
     req.user.createGeonote({ 
+      individualHooks:true,
       geom: point,
       txt: txt,
       email: username,

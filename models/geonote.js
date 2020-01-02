@@ -24,6 +24,18 @@ const Geonote = db.define("geonote", {
     type: Sequelize.BOOLEAN,
     allowNull: false
   }
+},{ hooks: {
+  beforeSave: function(instance){
+    if(instance.geometry && !instance.geometry.crs) {
+      instance.geometry.crs = {
+        type: 'name',
+        properties: {
+          name: 'EPSG:4326'
+        }
+      }
+    }
+  }
+}
 });
 
 module.exports = Geonote

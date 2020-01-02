@@ -8,7 +8,7 @@ const Geonote = db.define("geonote", {
     allowNull: false,
     primaryKey: true
   },
-  username: {
+  email: {
     type: Sequelize.STRING,
     allowNull:false
   },
@@ -18,6 +18,10 @@ const Geonote = db.define("geonote", {
   },
   geom: {
     type: Sequelize.GEOMETRY('Point', 4326),
+    allowNull: false
+  },
+  public:{
+    type: Sequelize.BOOLEAN,
     allowNull: false
   }
 });

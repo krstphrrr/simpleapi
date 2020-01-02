@@ -20,9 +20,17 @@ html
       header.mdl-layout__header
         div.mdl-layout__header-row
           div.mdl-layout-spacer
-          nav.mdl-navigation 
-            a.mdl-navigation__link(href="/") home
+          nav.mdl-navigation
+            a.mdl-navigation__link(href="/", ) home
             a.mdl-navigation__link(href="/geo") all notes..'/geo'
-            a.mdl-navigation__link(href="/add-geo") add prod
-            a.mdl-navigation__link(href="/login") Login
+            if (isAuthenticated)
+              a.mdl-navigation__link(href="/add-geo") add geonote
+            if (!isAuthenticated)
+              a.mdl-navigation__link(href="/login") Login
+              a.mdl-navigation__link(href="/signup") Sign up
+
+            if(isAuthenticated)
+              form.mdl-navigation#logoutid(action="/logout", method="POST")
+                a.mdl-navigation__link(href="javascript:{}", onclick="document.getElementById('logoutid').submit()") Logout
+
       block content

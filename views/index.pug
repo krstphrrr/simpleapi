@@ -13,9 +13,22 @@ block content
                 id: 'mapbox/streets-v11',
                 accessToken: str()
             }).addTo(mymap);
-   
+    //- function onEachFeature(feature, layer) {
+    //-   if (feature.properties && feature.properties.txt) {
+    //-       layer.bindPopup(feature.properties.txt);
+    //-       }
+    //-   }
     const geojsonfeature = !{items}
-    L.geoJSON(geojsonfeature).addTo(mymap)
+    L.geoJSON(geojsonfeature, {
+      
+      pointToLayer: function(feature, latlng){
+        return new L.CircleMarker(latlng)
+      },
+      onEachFeature: function(feature, layer){
+        layer.bindPopup('<p>note:'+feature.properties.txt+'</p>'+'<p>created by: '+ feature.properties.email+'</p>'+'<p>public note?: '+feature.properties.public+'</p>')
+      },
+    }).addTo(mymap)
+    
     const geobounds = L.geoJSON(geojsonfeature).addTo(mymap)
     mymap.fitBounds(geobounds.getBounds())
 

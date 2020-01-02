@@ -82,12 +82,19 @@ exports.postaddGeonote = (req, res, next)=>{
     const rest = (...args)=>{return `${args}`}
     const point = {type: 'Point', coordinates:rest(geom).split(",")};
     req.user.createGeonote({ 
-      individualHooks:true,
+
       geom: point,
       txt: txt,
       email: username,
       userId: req.user.id,
       public: public
+    }).then({
+      function(instance){
+        instance.update(req.body,{
+          returning:true,
+          plain: true
+        })
+      }
     })
         .then(result=>{
             console.log("Created geonote!")

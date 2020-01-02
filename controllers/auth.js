@@ -3,9 +3,9 @@ const bcrypt = require('bcryptjs')
 
 exports.getLogin = (req, res, next)=>{
     const isLoggedIn='';
-    if (isLoggedIn){
-        const isLoggedIn = req.get("Cookie").split("=")[1];
-    }
+    // if (isLoggedIn){
+    //     const isLoggedIn = req.get("Cookie").split("=")[1];
+    // }
     res.render('auth/login', {
         path: '/login',
         pageTitle: 'Login',

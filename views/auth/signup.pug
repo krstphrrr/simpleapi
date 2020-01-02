@@ -1,0 +1,18 @@
+extends ../layout
+
+block content
+  div.mdl-grid
+    div.mdl-cell.mdl-cell--12-col 
+    div.mdl-cell.mdl-cell--12-col
+      div.mdl-card.mdl-shadow--2dp
+        form(action="/signup", method="POST")
+          div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+            input.mdl-textfield__input(type="text",name="email", id="email")
+            label.mdl-textfield__label(for="email") E-mail
+          div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+            input.mdl-textfield__input(type="password", name="password", id="password")
+            label.mdl-textfield__label(for="password") Password
+          div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+            input.mdl-textfield__input(type="password", name="confirmpassword", id="confirmpassword")
+            label.mdl-textfield__label(for="confirmpassword") Confirm password
+          button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored(type="submit") Sign up

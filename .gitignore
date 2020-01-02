@@ -2242,3 +2242,7 @@ node_modules/uid-safe/LICENSE
 node_modules/uid-safe/package.json
 node_modules/uid-safe/README.md
 views/scripts/mp.js
+node_modules/bcryptjs/package.json
+node_modules/bcryptjs/dist/bcrypt.min.js
+node_modules/bcryptjs/dist/bcrypt.min.map
+node_modules/bcryptjs/tests/quickbrown.txt

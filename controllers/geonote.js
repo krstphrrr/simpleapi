@@ -204,6 +204,7 @@ exports.getIndex = (req, res, next) =>{
         const ready = geoJSON.parse(parsed, {GeoJSON:'geom'})
         res.render('index',{
           items: JSON.stringify(ready),
+          raw:publicgeo,
           editing:false,
           isAuthenticated: req.session.isLoggedIn
         })
@@ -220,6 +221,7 @@ exports.getIndex = (req, res, next) =>{
         const parsed = JSON.parse(unparsed)
         const ready = geoJSON.parse(parsed,{GeoJSON: 'geom'})
         res.render('index',{
+          raw:geonote,
           items: JSON.stringify(ready),
           editing:false,
           isAuthenticated: req.session.isLoggedIn

@@ -11,8 +11,10 @@ block content
                             p #{item.nid}
                             p #{item.dataValues.geom.coordinates}
                             p #{item.txt}
-                            p #{item.username}
+                            p #{item.email}
+                            p public? #{item.public}
                             div.card__actions
                               a.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored(href="/geo/"+item.nid) Details
-                              a.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored(href="/edit-geo/"+item.nid+"?edit=true") Edit
+                              if (isAuthenticated)
+                                a.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored(href="/edit-geo/"+item.nid+"?edit=true") Edit
                               

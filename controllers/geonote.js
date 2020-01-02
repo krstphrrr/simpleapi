@@ -155,7 +155,7 @@ exports.posteditGeo = (req, res, next) => {
   const rest = (...args) => {
     return `${args}`;
   };
-  const point = { type: "Point", coordinates: rest(updatedgeom).split(",") };
+  const point = { type: "Point", coordinates: rest(updatedgeom).split(","), crs: { type: 'name', properties: { name: 'EPSG:4326' } } };
   //if a user is the one finding the note..
 
   Geonote.findByPk(geoId)

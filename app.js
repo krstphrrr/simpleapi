@@ -9,6 +9,8 @@ const pgDBstore = require('connect-session-sequelize')(session.Store)
 
 // database
 const db = require('./config/database');
+
+const errorController = require("./controllers/error");
 const Geonote = require('./models/geonote')
 const User = require('./models/user')
 
@@ -38,10 +40,12 @@ app.use(
   })
 );
 app.use((req, res, next)=>{
-  User.findByPk(1)
+  if(!req.session.user){
+    return next()
+  } 
+  User.findByPk(req.session.user.id)
   .then(user =>{
     req.user = user
-    // console.log(req.user)
     next()
   })
   .catch(err =>console.log(err))
@@ -55,32 +59,24 @@ app.use(authRoutes)
 Geonote.belongsTo(User)
 User.hasMany(Geonote, {as:'Geonotes'})
 
+app.use(errorController.get404);
+
 db
   .sync() //force in dev
   .then(result =>{
-    return User.findByPk(1)
-    // console.log(result)
-  })
-  .then(user =>{
-    if(!user){
-      return User.create({name:'ElAdmin', email:'eladmin@admin.com'})
-    }
-    return Promise.resolve(user)
-  })
-  .then(user =>{
-    // console.log(str)
-    app.listen(3000)
-  })
+    
+    app.listen(5000)
+    })
   .catch(err =>{
     console.log(err)
   })
 
 
 // listening
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`escuchando en..${PORT}`);
-})
+// const PORT = process.env.PORT || 5000;
+// app.listen(PORT, () => {
+//     console.log(`escuchando en..${PORT}`);
+// })
 
 
 

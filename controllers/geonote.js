@@ -3,6 +3,19 @@ const geoJSON = require('geojson')
 // get all the notes in db
 
 exports.getGeonote = (req, res, next) => {
+  if(!req.user){
+    Geonote.findAll({ where: { public: true } })
+      .then(geonote => {
+        res.render("geo", {
+          items: geonote,
+          pageTitle: "GEO!!",
+          path: "/geo"
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  } else {
     req.user
         .getGeonotes()
     // Geonote.findAll()
@@ -12,12 +25,13 @@ exports.getGeonote = (req, res, next) => {
                 // latlong: geonote[0].dataValues.geom.coordinates,
                 pageTitle: 'GEO!!', 
                 path:'/geo',
-                isAuthenticated: req.isLoggedIn
+                isAuthenticated: req.session.isLoggedIn
             })
         })
         .catch(err =>{
             console.log(err)
         })
+    }
 }
 
 //get a single note from db
@@ -30,7 +44,7 @@ exports.getGeo = (req, res, next) => {
         items: geonote,
         pageTitle: "GEO!!",
         path: "/geodetail",
-        isAuthenticated: req.isLoggedIn
+        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch(err => {
@@ -44,7 +58,7 @@ exports.getaddGeonote = (req, res, next)=>{
     res.render('edit-geo', {
         pageTitle:'add note',
         editing:false,
-        isAuthenticated: req.isLoggedIn
+        isAuthenticated: req.session.isLoggedIn
     })
 }
 
@@ -53,16 +67,22 @@ exports.getaddGeonote = (req, res, next)=>{
 exports.postaddGeonote = (req, res, next)=>{
     const geom = req.body.geom;
     const txt = req.body.txt;
-    const username = req.body.username
+    const username = req.user.email
+    let public = false
+    const switchval = req.body.switch1
+    if(!switchval){
+      public = false
+    } else {
+      public = true
+    }
     const rest = (...args)=>{return `${args}`}
     const point = {type: 'Point', coordinates:rest(geom).split(",")};
-    // const point = { type: 'Point', coordinates: [req.body.long, req.body.lat] };
-    // ^^^could work but needs update in pug: individual inputforms that reference lat & long
-    // console.log(req.user)
-    req.user.createGeonote({ //create an associated note (associated w a user)
+    req.user.createGeonote({ 
       geom: point,
       txt: txt,
-      username: username
+      email: username,
+      userId: req.user.id,
+      public: public
     })
         .then(result=>{
             console.log("Created geonote!")
@@ -79,32 +99,38 @@ exports.postaddGeonote = (req, res, next)=>{
 exports.editGeo = (req, res, next) => {
   const geoId = req.params.id;
   const editMode = req.query.edit
+  const preauth = req.session.isLoggedIn
   if(!editMode){
-      console.log(req)
+    //   console.log(req)
       return res.redirect('/')
   }
-  req.user.getGeonotes({where:{nid:geoId}})//brings an array
-//   Geonote.findByPk(geoId)
-    .then(geonotes => {
-    // console.log(geonotes) //darn array
-    // console.log(geonotes[0]) 
-    const geonote = geonotes[0] 
-    if (!geonotes) {
-        console.log("segunda salida")
-        return res.redirect('/')
-    }
-      res.render("edit-geo", {
-        items: geonote,
-        pageTitle: "GEO!!",
-        path: "/edit-geo",
-        editing: true,
-        geoId: geoId,
-        isAuthenticated: req.isLoggedIn
+  if(preauth===true){
+    req.user
+      .getGeonotes({ where: { nid: geoId } }) //brings an array
+      //   Geonote.findByPk(geoId)
+      .then(geonotes => {
+        // console.log(geonotes) //darn array
+        // console.log(geonotes[0])
+        const geonote = geonotes[0];
+        if (!geonotes) {
+          console.log("segunda salida");
+          return res.redirect("/");
+        }
+        res.render("edit-geo", {
+          items: geonote,
+          pageTitle: "GEO!!",
+          path: "/edit-geo",
+          editing: true,
+          geoId: geoId,
+          isAuthenticated: req.session.isLoggedIn
+        });
+      })
+      .catch(err => {
+        console.log(err);
       });
-    })
-    .catch(err => {
-      console.log(err);
-    });
+  }
+
+  
 };
 
 // actually POST updated geonote to db
@@ -113,7 +139,14 @@ exports.posteditGeo = (req, res, next) => {
   const geoId = req.body.nid
   const updatedgeom = req.body.geom;
   const updatedtxt = req.body.txt;
-  const updatedusername = req.body.username;
+  const username = req.user.email;
+  let updatedpublic = false;
+  const switchval = req.body.switch1;
+  if (!switchval) {
+    updatedpublic = false;
+  } else {
+    updatedpublic = true;
+  }
   const rest = (...args) => {
     return `${args}`;
   };
@@ -125,7 +158,8 @@ exports.posteditGeo = (req, res, next) => {
       
       geonote.geom = point
       geonote.txt = updatedtxt;
-      geonote.username = updatedusername
+      geonote.email = username
+      geonote.public = updatedpublic
       return geonote.save()
     })
     .then(result => {
@@ -154,22 +188,38 @@ exports.postDeleteGeo = (req, res, next)=>{
 
 
 exports.getIndex = (req, res, next) =>{
-    // console.log(req.user)
-    // const isLoggedIn = req.get("Cookie").split("=")[1];
+  if(!req.user){
+    Geonote.findAll({where:{public:true}})
+      .then(publicgeo=>{
+        if (!publicgeo){
+          res.redirect('/404')
+        }
+        const unparsed = JSON.stringify(publicgeo)
+        const parsed = JSON.parse(unparsed)
+        const ready = geoJSON.parse(parsed, {GeoJSON:'geom'})
+        res.render('index',{
+          items: JSON.stringify(ready),
+          editing:false,
+          isAuthenticated: req.session.isLoggedIn
+        })
+      })
+      .catch(err=>console.log(err))
+  } else {
     req.user
-        .getGeonotes()
-    // Geonote.findAll()
-        .then(geonote =>{
-         const data = JSON.stringify(geonote)
-         const geodata= JSON.parse(data)
-         const gd = geoJSON.parse(geodata,{GeoJSON: 'geom'})
-         console.log(gd)
-         res.render('index',{
-                items: JSON.stringify(gd),
-                editing:false
-                // isAuthenticated:isLoggedIn
-            
+      .getGeonotes()
+      .then(geonote =>{
+        if (!geonote){
+          res.redirect('/404')
+        }
+        const unparsed = JSON.stringify(geonote)
+        const parsed = JSON.parse(unparsed)
+        const ready = geoJSON.parse(parsed,{GeoJSON: 'geom'})
+        res.render('index',{
+          items: JSON.stringify(ready),
+          editing:false,
+          isAuthenticated: req.session.isLoggedIn
         })
     })
-        .catch(err=>console.log(err))
+      .catch(err=>console.log(err))
+  }
 }

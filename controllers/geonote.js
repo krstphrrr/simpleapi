@@ -80,7 +80,7 @@ exports.postaddGeonote = (req, res, next)=>{
       public = true
     }
     const rest = (...args)=>{return `${args}`}
-    const point = {type: 'Point', coordinates:rest(geom).split(",")};
+    const point = {type: 'Point', coordinates:rest(geom).split(","), crs: {type:'name', properties:{name:'EPSG:4326'}}};
     req.user.createGeonote({ 
 
       geom: point,
@@ -88,13 +88,6 @@ exports.postaddGeonote = (req, res, next)=>{
       email: username,
       userId: req.user.id,
       public: public
-    }).then({
-      function(instance){
-        instance.update(req.body,{
-          returning:true,
-          plain: true
-        })
-      }
     })
         .then(result=>{
             console.log("Created geonote!")

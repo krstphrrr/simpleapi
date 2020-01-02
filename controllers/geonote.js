@@ -55,11 +55,15 @@ exports.getGeo = (req, res, next) => {
 // get page to ADD a new note to db 
 
 exports.getaddGeonote = (req, res, next)=>{
+  // if (!req.session.isLoggedIn){
+  //   return res.redirect('/login')
+  // } else {
     res.render('edit-geo', {
         pageTitle:'add note',
         editing:false,
         isAuthenticated: req.session.isLoggedIn
     })
+  // }
 }
 
 // actually ADD the new note to db

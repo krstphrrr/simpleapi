@@ -1,4 +1,3 @@
-config/conf.js
 node_modules/.bin/brfs
 node_modules/.bin/brfs.cmd
 node_modules/.bin/brfs.ps1

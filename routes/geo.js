@@ -2,13 +2,13 @@ const express = require('express')
 const path = require('path')
 
 const geoController = require('../controllers/geonote')
-
+const isAuth = require('../middleware/is-auth')
 const router = express.Router()
 
 router.get("/geo",geoController.getGeonote)
 // adding a note
 router.post("/add-geo", geoController.postaddGeonote)
-router.get("/add-geo", geoController.getaddGeonote)
+router.get("/add-geo",isAuth, geoController.getaddGeonote)
 // getting index
 router.get("/", geoController.getIndex)
 //getting a single note

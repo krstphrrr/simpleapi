@@ -2,9 +2,10 @@ extends layout
   
 block content
   div#mapid(style="height:100%")
-  div.leaflet-bottom.leaflet-right(style="pointer-events:auto;")
-      button.mdl-button.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect.mdl-button--colored
-        i.material-icons add
+  if (isAuthenticated)
+    div.leaflet-bottom.leaflet-right(style="pointer-events:auto;")
+        button.mdl-button.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect.mdl-button--colored
+          i.material-icons add
   script(src="scripts/mp.js")
   script.
     navigator.geolocation.getCurrentPosition(function(location) {

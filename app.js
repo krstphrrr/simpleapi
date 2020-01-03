@@ -6,6 +6,7 @@ const exphbs = require('express-handlebars')
 const Sequelize = require('sequelize');
 const session = require('express-session')
 const pgDBstore = require('connect-session-sequelize')(session.Store)
+const csrf = require('csurf')
 
 // database
 const db = require('./config/database');
@@ -21,7 +22,7 @@ db.authenticate()
 
 // apps
 const app = express();
-
+const csrfProtect = csrf()
 
 // load view engine 
 
@@ -39,6 +40,8 @@ app.use(
     saveUninitialized: false
   })
 );
+app.use(csrfProtect)
+
 app.use((req, res, next)=>{
   if(!req.session.user){
     return next()
@@ -49,6 +52,12 @@ app.use((req, res, next)=>{
     next()
   })
   .catch(err =>console.log(err))
+})
+
+app.use((req, res, next)=>{
+  res.locals.isAuthenticated = req.session.isLoggedIn
+  res.locals.csrfToken = req.csrfToken()
+  next()
 })
 
 const geoRoutes = require('./routes/geo')
@@ -62,7 +71,7 @@ User.hasMany(Geonote, {as:'Geonotes'})
 app.use(errorController.get404);
 
 db
-  .sync() //force in dev
+  .sync({logging:false}) //force in dev
   .then(result =>{
     
     app.listen(process.env.PORT || 5000)

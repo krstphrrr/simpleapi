@@ -4,20 +4,20 @@ const path = require('path')
 const geoController = require('../controllers/geonote')
 const isAuth = require('../middleware/is-auth')
 const router = express.Router()
-
+// no auth
 router.get("/geo",geoController.getGeonote)
 // adding a note
-router.post("/add-geo", geoController.postaddGeonote)
+router.post("/add-geo",isAuth, geoController.postaddGeonote)
 router.get("/add-geo",isAuth, geoController.getaddGeonote)
-// getting index
+// getting index -- no auth
 router.get("/", geoController.getIndex)
-//getting a single note
+//getting a single note - noauth
 router.get("/geo/:id", geoController.getGeo);
 // editing a note
-router.get("/edit-geo/:id", geoController.editGeo)
-router.post("/edit-geo", geoController.posteditGeo)
+router.get("/edit-geo/:id",isAuth, geoController.editGeo)
+router.post("/edit-geo",isAuth, geoController.posteditGeo)
 
 // deleting a note
-router.post('/delete-geo', geoController.postDeleteGeo)
+router.post('/delete-geo',isAuth, geoController.postDeleteGeo)
 
 module.exports = router

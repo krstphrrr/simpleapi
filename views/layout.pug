@@ -32,6 +32,7 @@ html
 
             if(isAuthenticated)
               form.mdl-navigation#logoutid(action="/logout", method="POST")
+                input(type="hidden", name="_csrf", value=csrfToken)
                 a.mdl-navigation__link(href="javascript:{}", onclick="document.getElementById('logoutid').submit()") Logout
       div.mdl-layout__drawer.mdl-layout--small-screen-only
         div.mdl-navigation
@@ -41,10 +42,12 @@ html
             a.mdl-navigation__link(href="/add-geo") add geonote
           if (!isAuthenticated)
             a.mdl-navigation__link(href="/login") Login
+            
             a.mdl-navigation__link(href="/signup") Sign up
 
           if(isAuthenticated)
             form.mdl-navigation#logoutid(action="/logout", method="POST")
+              input(type="hidden", value=csrfToken)
               a.mdl-navigation__link(href="javascript:{}", onclick="document.getElementById('logoutid').submit()") Logout
       main.mdl-layout__content
         block content

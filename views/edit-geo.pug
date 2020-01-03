@@ -10,6 +10,7 @@ block content
           //-   input.mdl-textfield__input(type="text", name="nid", id="nid")
           //-   label.mdl-textfield__label(for="nid") UID...
           div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+            input(type="hidden", name="_csrf", value=csrfToken)
             input.mdl-textfield__input(type="text",name="geom", id="geom", value=(editing===true?items.dataValues.geom.coordinates:''))
             label.mdl-textfield__label(for="geom") coords?
           div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label

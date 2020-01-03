@@ -1,11 +1,15 @@
 extends layout
   
 block content
-  #mapid(style="height:100%", data-tap-disabled="true")
+  div#mapid(style="height:100%")
+  div.leaflet-bottom.leaflet-right(style="pointer-events:auto;")
+      button.mdl-button.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect.mdl-button--colored
+        i.material-icons add
   script(src="scripts/mp.js")
   script.
-    const markers =[] 
-    const mymap = L.map("mapid").setView([32.302804, -106.727800], 13);
+    navigator.geolocation.getCurrentPosition(function(location) {
+    var crrntlatlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
+    const mymap = L.map("mapid").setView(crrntlatlng, 13);
     // tile layer
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
                 attribution: '.',
@@ -18,9 +22,9 @@ block content
     //-       layer.bindPopup(feature.properties.txt);
     //-       }
     //-   }
+    
     const geojsonfeature = !{items}
-    L.geoJSON(geojsonfeature, {
-      
+    L.geoJSON(geojsonfeature, {      
       pointToLayer: function(feature, latlng){
         return new L.CircleMarker(latlng)
       },
@@ -28,8 +32,10 @@ block content
         layer.bindPopup('<p>note:'+feature.properties.txt+'</p>'+'<p>created by: '+ feature.properties.email+'</p>'+'<p>public note?: '+feature.properties.public+'</p>')
       },
     }).addTo(mymap)
+    const marker = L.marker(crrntlatlng,{
+      tap: true
+    }).addTo(mymap);
+    })
     
-    const geobounds = L.geoJSON(geojsonfeature).addTo(mymap)
-    mymap.fitBounds(geobounds.getBounds())
-
-    
+    //- const geobounds = L.geoJSON(geojsonfeature).addTo(mymap)
+    //- mymap.fitBounds(geobounds.getBounds())

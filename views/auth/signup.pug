@@ -7,6 +7,7 @@ block content
       div.mdl-card.mdl-shadow--2dp
         form(action="/signup", method="POST")
           div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+            input(type="hidden", name="_csrf", value=csrfToken)
             input.mdl-textfield__input(type="text",name="email", id="email")
             label.mdl-textfield__label(for="email") E-mail
           div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label

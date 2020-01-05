@@ -14,6 +14,7 @@ const db = require('./config/database');
 const errorController = require("./controllers/error");
 const Geonote = require('./models/geonote')
 const User = require('./models/user')
+const Data = require('./models/data')
 
 // test db
 db.authenticate()
@@ -24,7 +25,7 @@ db.authenticate()
 const app = express();
 const csrfProtect = csrf()
 
-// load view engine 
+//view engine 
 
 app.set('views', path.join(__dirname,'views'))
 app.set('view engine', 'pug')
@@ -55,6 +56,7 @@ app.use((req, res, next)=>{
 })
 
 app.use((req, res, next)=>{
+  res.locals.isAdm = req.session.isAdm
   res.locals.isAuthenticated = req.session.isLoggedIn
   res.locals.csrfToken = req.csrfToken()
   next()
@@ -67,6 +69,7 @@ app.use(authRoutes)
 
 Geonote.belongsTo(User)
 User.hasMany(Geonote, {as:'Geonotes'})
+User.hasMany(Data)
 
 app.use(errorController.get404);
 

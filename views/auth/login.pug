@@ -1,16 +1,19 @@
 extends ../layout
 
+
 block content
-  div.mdl-grid
+  div.mdl-grid(style='justify-content:center')
     div.mdl-cell.mdl-cell--12-col 
-    div.mdl-cell.mdl-cell--12-col
-      div.mdl-card.mdl-shadow--2dp
-        form(action="/login", method="POST")
-          div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
-            input(type="hidden", name="_csrf", value=csrfToken)
-            input.mdl-textfield__input(type="text",name="email", id="email")
-            label.mdl-textfield__label(for="email") E-mail
-          div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
-            input.mdl-textfield__input(type="password", name="password", id="password")
-            label.mdl-textfield__label(for="password") Password
-          button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored(type="submit") Submit 
+    div.mdl-cell.mdl-cell--4-col(style='align-items:center')
+      div.mdl-card.mdl-shadow--16dp
+        div.mdl-card.card-content
+          form(action="/login", method="POST")
+            div.mdl-card.card-cell(style='align-items:center')
+              div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                input(type="hidden", name="_csrf", value=csrfToken)
+                input.mdl-textfield__input(type="text",name="email", id="email")
+                label.mdl-textfield__label(for="email") E-mail
+              div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                input.mdl-textfield__input(type="password", name="password", id="password")
+                label.mdl-textfield__label(for="password") Password
+              button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored(type="submit") Submit 

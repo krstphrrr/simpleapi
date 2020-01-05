@@ -14,6 +14,7 @@ exports.getLogin = (req, res, next)=>{
 }
 
 exports.postLogin = (req, res, next) => {
+  
   const email = req.body.email
   const password = req.body.password
   User.findOne({where:{email:email}})
@@ -26,6 +27,10 @@ exports.postLogin = (req, res, next) => {
           if(doMatch){
             req.session.isLoggedIn = true;
             req.session.user = user;
+            if(email==='test@test.com'){
+              
+              req.session.isAdm = true
+                }
             return req.session.save(err => {
               console.log(err);
               res.redirect("/");

@@ -23,7 +23,9 @@ html
           div.mdl-layout-spacer
           nav.mdl-navigation.mdl-layout--large-screen-only
             a.mdl-navigation__link(href="/", ) home
-            a.mdl-navigation__link(href="/geo") all notes..'/geo'
+            if(isAdm)
+              a.mdl-navigation__link(href="/adm") admin panel
+            a.mdl-navigation__link(href="/geo") all notes 
             if (isAuthenticated)
               a.mdl-navigation__link(href="/add-geo") add geonote
             if (!isAuthenticated)

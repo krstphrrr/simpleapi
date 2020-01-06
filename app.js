@@ -7,6 +7,7 @@ const Sequelize = require('sequelize');
 const session = require('express-session')
 const pgDBstore = require('connect-session-sequelize')(session.Store)
 const csrf = require('csurf')
+const flash = require('connect-flash')
 
 // database
 const db = require('./config/database');
@@ -42,6 +43,8 @@ app.use(
   })
 );
 app.use(csrfProtect)
+app.use(flash())
+
 
 app.use((req, res, next)=>{
   if(!req.session.user){

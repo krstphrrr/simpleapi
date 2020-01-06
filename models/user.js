@@ -15,6 +15,17 @@ const User = db.define("user",{
     password: {
         type: Sequelize.STRING,
         allowNull: false
+<<<<<<< HEAD
+=======
+    },
+    resetToken: {
+        type: Sequelize.STRING,
+        allowNull: true
+    },
+    resetTokenExpiration: {
+        type:Sequelize.DATE,
+        allowNull: true
+>>>>>>> a002784f9860b48564c2825b4149d662a5d15298
     }
 })
 

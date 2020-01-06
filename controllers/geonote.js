@@ -127,11 +127,16 @@ exports.editGeo = (req, res, next) => {
           path: "/edit-geo",
           editing: true,
 <<<<<<< HEAD
+<<<<<<< HEAD
           geoId: geoId,
           isAuthenticated: req.session.isLoggedIn
 =======
           geoId: geoId
 >>>>>>> a002784f9860b48564c2825b4149d662a5d15298
+=======
+          geoId: geoId,
+          isAuthenticated: req.session.isLoggedIn
+>>>>>>> parent of 039df21... added password recovery
         });
       })
       .catch(err => {
@@ -210,11 +215,16 @@ exports.getIndex = (req, res, next) =>{
           items: JSON.stringify(ready),
           raw:publicgeo,
 <<<<<<< HEAD
+<<<<<<< HEAD
           editing:false,
           isAuthenticated: req.session.isLoggedIn
 =======
           editing:false
 >>>>>>> a002784f9860b48564c2825b4149d662a5d15298
+=======
+          editing:false,
+          isAuthenticated: req.session.isLoggedIn
+>>>>>>> parent of 039df21... added password recovery
         })
       })
       .catch(err=>console.log(err))
@@ -232,15 +242,21 @@ exports.getIndex = (req, res, next) =>{
           raw:geonote,
           items: JSON.stringify(ready),
 <<<<<<< HEAD
+<<<<<<< HEAD
           editing:false,
           isAuthenticated: req.session.isLoggedIn
 =======
           editing:false
 >>>>>>> a002784f9860b48564c2825b4149d662a5d15298
+=======
+          editing:false,
+          isAuthenticated: req.session.isLoggedIn
+>>>>>>> parent of 039df21... added password recovery
         })
     })
       .catch(err=>console.log(err))
   }
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 }
@@ -249,4 +265,6 @@ exports.getPanel = (req, res, next)=>{
   User.findAll()
   res.render('admin/admin')
 >>>>>>> a002784f9860b48564c2825b4149d662a5d15298
+=======
+>>>>>>> parent of 039df21... added password recovery
 }

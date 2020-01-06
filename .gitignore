@@ -11266,6 +11266,7 @@ node_modules/tsscmp/README.md
 node_modules/tsscmp/lib/index.js
 node_modules/tsscmp/test/benchmark/index.js
 node_modules/tsscmp/test/unit/index.js
+<<<<<<< HEAD
 node_modules/.bin/sshpk-conv
 node_modules/.bin/sshpk-conv.cmd
 node_modules/.bin/sshpk-conv.ps1
@@ -12318,3 +12319,5 @@ simpleapi.git/secret.txt
 =======
 simpleapi.git/packed-refs
 >>>>>>> a002784f9860b48564c2825b4149d662a5d15298
+=======
+>>>>>>> parent of 039df21... added password recovery

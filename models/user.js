@@ -16,6 +16,7 @@ const User = db.define("user",{
         type: Sequelize.STRING,
         allowNull: false
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     },
     resetToken: {
@@ -26,6 +27,8 @@ const User = db.define("user",{
         type:Sequelize.DATE,
         allowNull: true
 >>>>>>> a002784f9860b48564c2825b4149d662a5d15298
+=======
+>>>>>>> parent of 039df21... added password recovery
     }
 })
 

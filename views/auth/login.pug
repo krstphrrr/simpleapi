@@ -2,6 +2,13 @@ extends ../layout
 
 
 block content
+<<<<<<< HEAD
+=======
+  if (errorMessage)
+    div.user-message.user-message--error #{errorMessage}
+  if (successMessage)
+    div.user-message #{successMessage}
+>>>>>>> a002784f9860b48564c2825b4149d662a5d15298
   div.mdl-grid(style='justify-content:center')
     div.mdl-cell.mdl-cell--12-col 
     div.mdl-cell.mdl-cell--4-col(style='align-items:center')
@@ -16,4 +23,9 @@ block content
               div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
                 input.mdl-textfield__input(type="password", name="password", id="password")
                 label.mdl-textfield__label(for="password") Password
+<<<<<<< HEAD
               button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored(type="submit") Submit 
+=======
+              button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored(type="submit") Login 
+              a.mdl-link(href='/reset', style='color:#009688; padding-top:10px') Reset Password
+>>>>>>> a002784f9860b48564c2825b4149d662a5d15298

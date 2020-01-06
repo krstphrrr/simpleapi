@@ -12314,3 +12314,7 @@ node_modules/verror/lib/verror.js
 bfg.jar
 secret.txt
 simpleapi.git/secret.txt
+<<<<<<< HEAD
+=======
+simpleapi.git/packed-refs
+>>>>>>> a002784f9860b48564c2825b4149d662a5d15298

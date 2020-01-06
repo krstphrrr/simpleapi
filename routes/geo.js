@@ -3,7 +3,6 @@ const path = require('path')
 
 const geoController = require('../controllers/geonote')
 const isAuth = require('../middleware/is-auth')
-const isAdm = require('../middleware/is-admin')
 const router = express.Router()
 // no auth
 router.get("/geo",geoController.getGeonote)
@@ -20,8 +19,5 @@ router.post("/edit-geo",isAuth, geoController.posteditGeo)
 
 // deleting a note
 router.post('/delete-geo',isAuth, geoController.postDeleteGeo)
-
-// admin panel 
-router.get('/adm', [isAuth, isAdm], geoController.getPanel)
 
 module.exports = router

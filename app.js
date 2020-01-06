@@ -8,9 +8,12 @@ const session = require('express-session')
 const pgDBstore = require('connect-session-sequelize')(session.Store)
 const csrf = require('csurf')
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 const flash = require('connect-flash')
 >>>>>>> a002784f9860b48564c2825b4149d662a5d15298
+=======
+>>>>>>> parent of 039df21... added password recovery
 
 // database
 const db = require('./config/database');
@@ -47,10 +50,13 @@ app.use(
 );
 app.use(csrfProtect)
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 app.use(flash())
 
 >>>>>>> a002784f9860b48564c2825b4149d662a5d15298
+=======
+>>>>>>> parent of 039df21... added password recovery
 
 app.use((req, res, next)=>{
   if(!req.session.user){

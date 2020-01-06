@@ -4,9 +4,12 @@ const path = require('path')
 const geoController = require('../controllers/geonote')
 const isAuth = require('../middleware/is-auth')
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 const isAdm = require('../middleware/is-admin')
 >>>>>>> a002784f9860b48564c2825b4149d662a5d15298
+=======
+>>>>>>> parent of 039df21... added password recovery
 const router = express.Router()
 // no auth
 router.get("/geo",geoController.getGeonote)
@@ -26,8 +29,11 @@ router.post('/delete-geo',isAuth, geoController.postDeleteGeo)
 <<<<<<< HEAD
 =======
 
+<<<<<<< HEAD
 // admin panel 
 router.get('/adm', [isAuth, isAdm], geoController.getPanel)
 >>>>>>> a002784f9860b48564c2825b4149d662a5d15298
 
+=======
+>>>>>>> parent of 039df21... added password recovery
 module.exports = router

@@ -1,6 +1,5 @@
 const User = require("../models/user");
 const bcrypt = require('bcryptjs')
-<<<<<<< HEAD
 const nodemailer = require('nodemailer')
 const sendgridTransport = require('nodemailer-sendgrid-transport')
 const crypto = require('crypto')
@@ -13,8 +12,6 @@ const transporter = nodemailer.createTransport(
     }
   })
 );
-=======
->>>>>>> parent of 039df21... added password recovery
 
 exports.getLogin = (req, res, next)=>{
     const isLoggedIn='';

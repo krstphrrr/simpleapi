@@ -12,13 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
     "connect-flash": "^0.1.1",
->>>>>>> a002784f9860b48564c2825b4149d662a5d15298
-=======
->>>>>>> parent of 039df21... added password recovery
     "connect-session-sequelize": "^6.0.0",
     "csurf": "^1.10.0",
     "dbgeo": "^1.1.0",

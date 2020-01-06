@@ -232,3 +232,7 @@ exports.getPanel = (req, res, next)=>{
   User.findAll()
   res.render('admin/admin')
 }
+
+exports.postMapNote = (req, res, next) =>{
+  console.log(req.body.note, req.body.latlong)
+}

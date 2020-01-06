@@ -24,4 +24,9 @@ router.post('/delete-geo',isAuth, geoController.postDeleteGeo)
 // admin panel 
 router.get('/adm', [isAuth, isAdm], geoController.getPanel)
 
+// mapsubmit 
+
+router.post('/mapsubmitnote', isAuth, geoController.postMapNote)
+// router.post('/delete-geo',isAuth, geoController.postMapNote)
+
 module.exports = router

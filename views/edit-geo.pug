@@ -1,29 +1,32 @@
 extends layout
 
 block content
-  div.mdl-grid
+  div.mdl-grid(style='justify-content:center')
     div.mdl-cell.mdl-cell--12-col 
-    div.mdl-cell.mdl-cell--12-col
-      div.mdl-card.mdl-shadow--2dp
-        form(action=(editing===false?'/add-geo':'/edit-geo/'), method="POST")
-          //- div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
-          //-   input.mdl-textfield__input(type="text", name="nid", id="nid")
-          //-   label.mdl-textfield__label(for="nid") UID...
-          div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
-            input(type="hidden", name="_csrf", value=csrfToken)
-            input.mdl-textfield__input(type="text",name="geom", id="geom", value=(editing===true?items.dataValues.geom.coordinates:''))
-            label.mdl-textfield__label(for="geom") coords?
-          div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
-            input.mdl-textfield__input(type="text", name="txt", id="txt", value=(editing===true?items.txt:''))
-            label.mdl-textfield__label(for="txt") note
-          //- div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
-          //-   input.mdl-textfield__input(type="text", name="username", id="username", value=(editing===true?items.username:''))
-          //-   label.mdl-textfield__label(for="username") Email
-          label.mdl-switch.mdl-js-switch.mdl-js-ripple-effect(for='switch1')
-              input.mdl-switch__input(type='checkbox', id='switch1', name='switch1')
-              span.mdl-switch__label public?
-          if (editing===false) 
-            button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored Submit 
-          else 
-            input.mdl-textfield__input(type="hidden", value=items.nid, name="nid")
-            button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored Update
+    div.mdl-cell.mdl-cell--4-col(style='align-items:center')
+      div.mdl-card.mdl-shadow--16dp
+        div.mdl-card.card-content
+        
+          form(action=(editing===false?'/add-geo':'/edit-geo/'), method="POST")
+            div.mdl-card.card-cell(style='align-items:center')
+              //- div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+              //-   input.mdl-textfield__input(type="text", name="nid", id="nid")
+              //-   label.mdl-textfield__label(for="nid") UID...
+              div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                input(type="hidden", name="_csrf", value=csrfToken)
+                input.mdl-textfield__input(type="text",name="geom", id="geom", value=(editing===true?items.dataValues.geom.coordinates:''))
+                label.mdl-textfield__label(for="geom") coords?
+              div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                input.mdl-textfield__input(type="text", name="txt", id="txt", value=(editing===true?items.txt:''))
+                label.mdl-textfield__label(for="txt") note
+              //- div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+              //-   input.mdl-textfield__input(type="text", name="username", id="username", value=(editing===true?items.username:''))
+              //-   label.mdl-textfield__label(for="username") Email
+              label.mdl-switch.mdl-js-switch.mdl-js-ripple-effect(for='switch1')
+                  input.mdl-switch__input(type='checkbox', id='switch1', name='switch1')
+                  span.mdl-switch__label public?
+              if (editing===false) 
+                button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored Submit 
+              else 
+                input.mdl-textfield__input(type="hidden", value=items.nid, name="nid")
+                button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored Update

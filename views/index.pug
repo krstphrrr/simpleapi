@@ -1,13 +1,30 @@
 extends layout
   
 block content
-  div#mapid(style="height:100%")
-  if (isAuthenticated)
-    div.leaflet-bottom.leaflet-right(style="pointer-events:auto;")
-        button.mdl-button.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect.mdl-button--colored
-          i.material-icons add
+  div#mapid(style="height:100%;z-index:1")
+  //- if (isAuthenticated)
+  div.leaflet-bottom.leaflet-right(style="pointer-events:auto;")
+    input(type="hidden", name="_csrf", value=csrfToken)
+    //- button.open-modal.mdl-button.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect.mdl-button--colored(data-open="modal1")
+    //-   i.material-icons add
+    //- div.modal#modal1(style="z-index:2")
+    //-   div.modal-dialog
+    //-     span.close-btn &times;
+    //-     h1
+  script.
+    const openEls = document.querySelectorAll("[data-open]");
+    const isVisible = "is-visible";
+    
+    for(const el of openEls) {
+      el.addEventListener("click", function() {
+        const modalId = this.dataset.open;
+        document.getElementById(modalId).classList.add(isVisible);
+      });
+    }
   script(src="scripts/mp.js")
   script.
+    
+    const isAuthenticated = !{isAuthenticated}
     navigator.geolocation.getCurrentPosition(function(location) {
     var crrntlatlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
     const mymap = L.map("mapid").setView(crrntlatlng, 13);
@@ -18,11 +35,6 @@ block content
                 id: 'mapbox/streets-v11',
                 accessToken: str()
             }).addTo(mymap);
-    //- function onEachFeature(feature, layer) {
-    //-   if (feature.properties && feature.properties.txt) {
-    //-       layer.bindPopup(feature.properties.txt);
-    //-       }
-    //-   }
     
     const geojsonfeature = !{items}
     L.geoJSON(geojsonfeature, {      
@@ -36,6 +48,54 @@ block content
     const marker = L.marker(crrntlatlng,{
       tap: true
     }).addTo(mymap);
+
+    //- const win = L.control.window(mymap, {title:'ok'}).show()
+
+    const customControl = L.Control.extend({
+    options: {
+      position: 'bottomright' 
+    //control position - allowed: 'topleft', 'topright', 'bottomleft', 'bottomright'
+      },
+ 
+    onAdd: function (map) {
+        var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+    
+        container.style.backgroundColor = 'yellow';
+        container.style.width = '50px';
+        container.style.height = '50px';
+    
+        container.onclick = function(){
+          L.control.window(mymap, {
+            content:`
+            
+            <form action="/mapsubmitnote" method="POST">
+              <input type="hidden" name="_csrf" value=csrfToken"></input>
+              <div class="mdl-grid" style="justfify-content:center">
+                <div class="mdl-cell mdl-cell--5-col">
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label>
+                    <input type="hidden" id="latlong" name="latlong" value=${crrntlatlng}>
+                    <input class="mdl-textfield__input" type="text" id="note" name="note">
+                    <label class="mdl-textfield__label" for="note">Add Geonote..</label>
+                  </div>
+                </div>
+                <div class="mdl-cell mdl-cell--3-col">    
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">submit</button>
+                </div>
+              </div>
+            </form>
+            `
+            }).show()
+        }
+        return container;
+      }
+    });
+    if (isAuthenticated){
+      mymap.addControl(new customControl())
+    }
+    
+
+
+
     })
     
     //- const geobounds = L.geoJSON(geojsonfeature).addTo(mymap)

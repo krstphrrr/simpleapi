@@ -126,7 +126,8 @@ exports.editGeo = (req, res, next) => {
           pageTitle: "GEO!!",
           path: "/edit-geo",
           editing: true,
-          geoId: geoId
+          geoId: geoId,
+          isAuthenticated: req.session.isLoggedIn
         });
       })
       .catch(err => {
@@ -204,7 +205,8 @@ exports.getIndex = (req, res, next) =>{
         res.render('index',{
           items: JSON.stringify(ready),
           raw:publicgeo,
-          editing:false
+          editing:false,
+          isAuthenticated: req.session.isLoggedIn
         })
       })
       .catch(err=>console.log(err))
@@ -221,14 +223,10 @@ exports.getIndex = (req, res, next) =>{
         res.render('index',{
           raw:geonote,
           items: JSON.stringify(ready),
-          editing:false
+          editing:false,
+          isAuthenticated: req.session.isLoggedIn
         })
     })
       .catch(err=>console.log(err))
   }
-}
-
-exports.getPanel = (req, res, next)=>{
-  User.findAll()
-  res.render('admin/admin')
 }

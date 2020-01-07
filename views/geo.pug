@@ -6,15 +6,19 @@ block content
         div.mdl-cell.mdl-cell--12-col
             if items.length > 0
                 each item in items
-                    div.mdl-cell.mdl-cell--2-col
-                        div.demo-card-square.mdl-card.mdl-shadow--2dp
-                            p #{item.nid}
-                            p #{item.dataValues.geom.coordinates}
-                            p #{item.txt}
-                            p #{item.email}
-                            p public? #{item.public}
-                            div.card__actions
-                              a.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored(href="/geo/"+item.nid) Details
-                              if (isAuthenticated)
-                                a.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored(href="/edit-geo/"+item.nid+"?edit=true") Edit
-                              
+                  div.mdl-grid(style='justify-content:center')
+                    div.mdl-cell.mdl-cell--12-col 
+                      div.mdl-cell.mdl-cell--4-col(style='align-items:center')
+                        div.demo-card-square.mdl-card.mdl-shadow--16dp
+                          div.mdl-card.card-content
+                            div.mdl-card.card-cell(style='align-items:center')
+                              p #{item.nid}
+                              p #{item.dataValues.geom.coordinates}
+                              p #{item.txt}
+                              p #{item.email}
+                              p public? #{item.public}
+                              div.card__actions
+                                a.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored(href="/geo/"+item.nid) Details
+                                if (isAuthenticated)
+                                  a.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored(href="/edit-geo/"+item.nid+"?edit=true") Edit
+                                

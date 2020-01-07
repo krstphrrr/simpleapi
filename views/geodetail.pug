@@ -4,16 +4,18 @@ block content
   main.centered
     h1 #{items.nid}
     hr
-    div.mdl-grid
-        div.mdl-cell.mdl-cell--12-col 
-        div.mdl-cell.mdl-cell--12-col
-          div.demo-card-square.mdl-card.mdl-shadow--2dp
-            p #{items.dataValues.geom.coordinates}
-            p #{items.txt}
-            p #{items.email}
-            p public? #{items.public}
-            div.card__actions
-              if (isAuthenticated)
-                form(action='/delete-geo', method='POST')
-                  input.mdl-textfield__input(type="hidden", value=items.nid, name="nid")
-                  button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored(type='submit') Delete
+    div.mdl-grid(style='justify-content:center')
+      div.mdl-cell.mdl-cell--12-col 
+      div.mdl-cell.mdl-cell--4-col(style='align-items:center')
+        div.demo-card-square.mdl-card.mdl-shadow--16dp
+          div.mdl-card.card-content
+            div.mdl-card.card-cell(style='align-items:center')
+              p #{items.dataValues.geom.coordinates}
+              p #{items.txt}
+              p #{items.email}
+              p public? #{items.public}
+              div.card__actions
+                if (isAdm)
+                  form(action='/delete-geo', method='POST')
+                    input.mdl-textfield__input(type="hidden", value=items.nid, name="nid")
+                    button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored(type='submit') Delete

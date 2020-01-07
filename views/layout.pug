@@ -35,10 +35,10 @@ html
               a.mdl-navigation__link(href="/login") Login
               a.mdl-navigation__link(href="/signup") Sign up
 
-            if(isAuthenticated)
+            if (isAuthenticated)
               form.mdl-navigation#logoutid1(action="/logout", method="POST")
                 input(type="hidden", name="_csrf", value=csrfToken)
-                a.mdl-navigation__link(href="javascript:{}", onclick="document.getElementById('logoutid').submit()") Logout
+                a.mdl-navigation__link(href="javascript:{}", onclick="document.getElementById('logoutid1').submit()") Logout
       div.mdl-layout__drawer.mdl-layout--small-screen-only
         div.mdl-navigation
           a.mdl-navigation__link(href="/", ) home
@@ -53,6 +53,6 @@ html
           if(isAuthenticated)
             form.mdl-navigation#logoutid2(action="/logout", method="POST")
               input(type="hidden", value=csrfToken)
-              a.mdl-navigation__link(href="javascript:{}", onclick="document.getElementById('logoutid').submit()") Logout
+              a.mdl-navigation__link(href="javascript:{}", onclick="document.getElementById('logoutid2').submit()") Logout
       main.mdl-layout__content
         block content

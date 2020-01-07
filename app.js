@@ -1,3 +1,5 @@
+// notes need a date created wherever theyre displayed!
+
 // modules
 const express = require('express');
 const bodyParser = require('body-parser');

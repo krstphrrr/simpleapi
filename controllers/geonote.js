@@ -234,5 +234,32 @@ exports.getPanel = (req, res, next)=>{
 }
 
 exports.postMapNote = (req, res, next) =>{
-  console.log(req.body.note, req.body.latlong)
+  const geom = req.body.latlong;
+  const txt = req.body.note;
+  const username = req.user.email;
+  let public = false;
+  const switchval = req.body.switch1;
+  if (!switchval) {
+    public = false;
+  } else {
+    public = true;
+  }
+  const rest = (...args)=>{return `${args}`}
+  const point = {type: 'Point', coordinates:rest(geom).split(","), crs: {type:'name', properties:{name:'EPSG:4326'}}};
+  console.log(point)
+    req.user
+      .createGeonote({
+        geom: point,
+        txt: txt,
+        email: username,
+        userId: req.user.id,
+        public: public
+      })
+      .then(result => {
+        req.flash('success')
+        res.redirect("/");
+      })
+      .catch(err => {
+        console.log(err);
+      });
 }

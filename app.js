@@ -76,7 +76,7 @@ User.hasMany(Data)
 app.use(errorController.get404);
 
 db
-  .sync({logging:false}) //force in dev
+  .sync({logging:true}) //force in dev
   .then(result =>{
     
     app.listen(process.env.PORT || 5000)

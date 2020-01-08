@@ -17,6 +17,9 @@ const Geonote = require('./models/geonote')
 const User = require('./models/user')
 const Data = require('./models/data')
 
+const pathfinderUI = require('pathfinder-ui')
+
+
 // test db
 db.authenticate()
     .then(() => console.log('database connected...'))
@@ -25,6 +28,13 @@ db.authenticate()
 // apps
 const app = express();
 const csrfProtect = csrf()
+
+app.use('/pathfinder', (req, res, next)=>{
+  pathfinderUI(app)
+  next()
+
+}, pathfinderUI.router)
+
 
 //view engine 
 

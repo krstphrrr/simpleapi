@@ -20,15 +20,21 @@
     "express-handlebars": "^3.1.0",
     "express-session": "^1.17.0",
     "geojson": "^0.5.0",
-    "mem": "^6.0.1",
+    "lodash": "^4.17.15",
+    "lstat": "^1.0.0",
+    "mem": "^4.3.0",
     "nodemailer": "^6.4.2",
     "nodemailer-sendgrid-transport": "^0.2.0",
     "nodemon": "^1.19.4",
     "pg": "^7.14.0",
     "pg-promise": "^10.3.2",
     "pug": "^2.0.4",
+    "readable-stream": "^3.4.0",
     "sequelize": "^5.21.3",
     "sequelize-auto": "^0.4.29",
     "uuid": "^3.3.3"
+  },
+  "devDependencies": {
+    "pathfinder-ui": "^1.0.3"
   }
 }

@@ -28,7 +28,7 @@
     "nodemon": "^1.19.4",
     "pg": "^7.14.0",
     "pg-promise": "^10.3.2",
-    "pug": "^2.0.4",
+    "pug": "^3.0.1",
     "readable-stream": "^3.4.0",
     "sequelize": "^5.21.3",
     "sequelize-auto": "^0.4.29",
